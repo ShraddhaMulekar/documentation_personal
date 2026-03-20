@@ -36,7 +36,7 @@ export const login = async (req, res) => {
     });
 
     // 5. Send response (NO password)
-    res.status(200).json({
+    return res.status(200).json({
       message: "Login successful!",
       token,
       user: {
@@ -47,7 +47,7 @@ export const login = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Login error!",
       error: error.message,
     });

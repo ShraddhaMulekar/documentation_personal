@@ -25,7 +25,7 @@ export const register = async (req, res) => {
     });
 
     // 4. Send response (NO PASSWORD)
-    res.status(201).json({
+    return res.status(201).json({
       message: "User registered successfully!",
       user: {
         _id: user._id,
@@ -34,7 +34,7 @@ export const register = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Registration error!",
       error: error.message,
     });
