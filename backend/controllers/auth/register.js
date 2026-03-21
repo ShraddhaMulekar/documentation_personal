@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt";
-import userModel from "../models/user.model.js";
+import {UserModel} from "../../models/user";
 
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
     // 1. Check user exists
-    const existingUser = await userModel.findOne({ email });
+    const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({
         message: "User already exists. Please login!",
@@ -18,7 +18,7 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // 3. Save user in DB
-    const user = await userModel.create({
+    const user = await UserModel.create({
       name,
       email,
       password: hashedPassword,

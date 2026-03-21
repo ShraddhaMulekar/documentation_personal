@@ -1,13 +1,13 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import userModel from "../models/user.model.js";
+import { UserModel } from "../../models/user";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
     // 1. Check user exists
-    const user = await userModel.findOne({ email });
+    const user = await UserModel.findOne({ email });
 
     if (!user) {
       return res.status(401).json({
