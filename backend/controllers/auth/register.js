@@ -16,8 +16,8 @@ export const register = async (req, res) => {
   if (!passwordRegex.test(password)) {
     return res.status(400).json({
       message:
-        "Password must have uppercase, lowercase, number, and special character",
-      success : false,
+        "Password must have uppercase, lowercase, number, special character, minimum at least 6 character and maximum 8 character",
+      success: false,
     });
   }
 
