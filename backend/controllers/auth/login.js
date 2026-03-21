@@ -6,7 +6,7 @@ export const login = async (req, res) => {
   const { email, password } = req.body || [];
 
   if(!email || !password){
-    return res.status(401).json({message:"Email & Password both are required!"})
+    return res.status(401).json({message:"Email & Password both are required!", success: false})
   }
 
   try {
@@ -16,6 +16,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         message: "Email Id not found. Please Register now!",
+        success: false,
       });
     }
 
@@ -25,6 +26,7 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({
         message: "Invalid password!",
+        success: false
       });
     }
 
@@ -48,12 +50,15 @@ export const login = async (req, res) => {
         name: user.name,
         email: user.email,
       },
+      success: true,
     });
 
   } catch (error) {
+    console.log({error})
     return res.status(500).json({
       message: "Login error!",
       error: error.message,
+      success: false,
     });
   }
 };

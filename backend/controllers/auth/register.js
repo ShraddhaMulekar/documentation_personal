@@ -2,14 +2,19 @@ import bcrypt from "bcrypt";
 import {UserModel} from "../../models/userModel.js";
 
 export const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password } = req.body||[]
+
+  if(!name || !email || !password){
+    return res.status(401).json({message:"Name, Email, Password are required!", success:false})
+  }
 
   try {
     // 1. Check user exists
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({
+      return res.status(401).json({
         message: "User already exists. Please login!",
+        success:false
       });
     }
 
@@ -32,11 +37,13 @@ export const register = async (req, res) => {
         name: user.name,
         email: user.email,
       },
+      success:true
     });
   } catch (error) {
     return res.status(500).json({
       message: "Registration error!",
       error: error.message,
+      success:false
     });
   }
 };
