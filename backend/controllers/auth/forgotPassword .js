@@ -3,7 +3,11 @@ import crypto from "crypto";
 
 export const forgotPassword = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email } = req.body || [];
+
+    if(!email){
+        return res.status(401).json({message:"Email is required!"})
+    }
 
     const user = await UserModel.findOne({ email });
 
@@ -33,6 +37,7 @@ export const forgotPassword = async (req, res) => {
       success: true,
     });
   } catch (error) {
+    // console.log({error})
     return res.status(500).json({
       message: "Forgot password error",
       error: error.message,
