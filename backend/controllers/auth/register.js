@@ -1,11 +1,24 @@
 import bcrypt from "bcrypt";
-import {UserModel} from "../../models/userModel.js";
+import { UserModel } from "../../models/userModel.js";
 
 export const register = async (req, res) => {
-  const { name, email, password } = req.body||[]
+  const { name, email, password } = req.body || [];
 
-  if(!name || !email || !password){
-    return res.status(401).json({message:"Name, Email, Password are required!", success:false})
+  if (!name || !email || !password) {
+    return res
+      .status(401)
+      .json({ message: "Name, Email, Password are required!", success: false });
+  }
+
+  //password validation
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,8}$/;
+
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      message:
+        "Password must have uppercase, lowercase, number, and special character",
+      success : false,
+    });
   }
 
   try {
@@ -14,7 +27,7 @@ export const register = async (req, res) => {
     if (existingUser) {
       return res.status(401).json({
         message: "User already exists. Please login!",
-        success:false
+        success: false,
       });
     }
 
@@ -37,13 +50,13 @@ export const register = async (req, res) => {
         name: user.name,
         email: user.email,
       },
-      success:true
+      success: true,
     });
   } catch (error) {
     return res.status(500).json({
       message: "Registration error!",
       error: error.message,
-      success:false
+      success: false,
     });
   }
 };
