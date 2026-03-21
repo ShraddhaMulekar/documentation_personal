@@ -3,7 +3,11 @@ import jwt from "jsonwebtoken";
 import { UserModel } from "../../models/userModel.js";
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body || [];
+
+  if(!email || !password){
+    return res.status(401).json({message:"Email & Password both are required!"})
+  }
 
   try {
     // 1. Check user exists
@@ -11,7 +15,7 @@ export const login = async (req, res) => {
 
     if (!user) {
       return res.status(401).json({
-        message: "User not found!",
+        message: "Email Id not found. Please Register now!",
       });
     }
 
