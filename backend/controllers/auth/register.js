@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { UserModel } from "../../models/userModel.js";
 
 export const register = async (req, res) => {
-  const { name, email, password } = req.body || [];
+  const { name, email, password, role } = req.body || [];
 
   if (!name || !email || !password) {
     return res
@@ -39,6 +39,7 @@ export const register = async (req, res) => {
     const user = await UserModel.create({
       name,
       email,
+      role,
       password: hashedPassword,
     });
 
@@ -49,6 +50,7 @@ export const register = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role
       },
       success: true,
     });
