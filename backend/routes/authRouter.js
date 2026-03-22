@@ -6,11 +6,11 @@ import { forgotPassword } from "../controllers/auth/forgotPassword .js"
 import { resetPassword } from "../controllers/auth/resetPassword .js"
 import { allUser } from "../controllers/auth/allUser.js"
 
-export const userRouter = express.Router()
+export const authRouter = express.Router()
 
-userRouter.get("/users", allUser)
-userRouter.post("/login", login)
-userRouter.post("/logout", logout)
-userRouter.post("/register", register)
-userRouter.post("/forgot-password", forgotPassword)
-userRouter.post("/reset-password/:token", resetPassword)
+authRouter.get("/users", allUser)
+authRouter.post("/login", login)
+authRouter.post("/logout", logout)
+authRouter.post("/register", register)
+authRouter.post("/forgot-password", forgotPassword)
+authRouter.post("/reset-password/:token", resetPassword)
