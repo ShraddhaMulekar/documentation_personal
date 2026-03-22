@@ -34,11 +34,12 @@ export const login = async (req, res) => {
     const payload = {
       id: user._id,
       name: user.name,
+      role: user.role
     };
 
     // 4. Generate token
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-      expiresIn: "7d",
+      expiresIn: "1d",
     });
 
     // 5. Send response (NO password)
@@ -49,6 +50,7 @@ export const login = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role
       },
       success: true,
     });
